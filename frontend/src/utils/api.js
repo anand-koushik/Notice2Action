@@ -1,5 +1,7 @@
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
 export async function fetchNotices() {
-  const res = await fetch('/api/notices');
+  const res = await fetch(`${API_BASE}/api/notices`);
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || 'Failed to fetch notice history');
@@ -8,7 +10,7 @@ export async function fetchNotices() {
 }
 
 export async function fetchNoticeDetails(id) {
-  const res = await fetch(`/api/notices/${id}`);
+  const res = await fetch(`${API_BASE}/api/notices/${id}`);
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || 'Failed to fetch notice details');
@@ -17,7 +19,7 @@ export async function fetchNoticeDetails(id) {
 }
 
 export async function analyzeNotice(payload) {
-  const res = await fetch('/api/notices/analyze', {
+  const res = await fetch(`${API_BASE}/api/notices/analyze`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
@@ -30,7 +32,7 @@ export async function analyzeNotice(payload) {
 }
 
 export async function updateChecklist(id, itemId, completed) {
-  const res = await fetch(`/api/notices/${id}/checklist`, {
+  const res = await fetch(`${API_BASE}/api/notices/${id}/checklist`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ itemId, completed })
@@ -43,7 +45,7 @@ export async function updateChecklist(id, itemId, completed) {
 }
 
 export async function deleteNotice(id) {
-  const res = await fetch(`/api/notices/${id}`, {
+  const res = await fetch(`${API_BASE}/api/notices/${id}`, {
     method: 'DELETE'
   });
   if (!res.ok) {
